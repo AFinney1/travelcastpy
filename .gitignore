@@ -1,6 +1,5 @@
 
 /venv/bin/python
-
 /LFv
 *LFv
 
@@ -8,3 +7,5 @@
 /TCv
 *LFvenv
 /LFvenv
+/key
+*key
