@@ -8,16 +8,18 @@ import pydeck as pdk
 
 def main():
     st.title("TravelCast")
-    start = st.text_input("Enter starting city: ")
-    end = st.text_input("Enter destination city: ")
+    start = st.text_input("Enter starting city: ", "Biloxi, MS, USA")
+    end = st.text_input("Enter destination city: ", "Memphis, TN, USA")
     #owm ->lat lon-> gmp - directions> TCapp.py
     #owm -weather -> gmp - directions> TCapp.py
     forecast = owm()
-    dist_matrix = gmp(lat = forecast.lat, lon = owm.lon).gmp_url
-    route1 = GMProute(start = start, end = end)
-     
-    print(dist_matrix)
-    st.beta_columns(dist_matrix)
+    start_coordinates = (forecast.lat, forecast.lon)
+    end_coordinates = (forecast.lat, forecast.lon)
+    route = GMProute(start = start_coordinates, end = end_coordinates)
+    directions = route.response.text
+    print(directions)
+    col1 = st. columns(1)
+    col1.image(directions)
     return None
 
    

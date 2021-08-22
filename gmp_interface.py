@@ -3,33 +3,23 @@ import googlemaps
 import dataclasses
 from dataclasses import dataclass
 from GMPk import gmp
+import requests, json
 
-
-
+#mport gmaps
+ 
 
 @dataclass
 class GMProute:
     """
     GMP Route
     """
-    start: str
-    end: str
+    key : str = gmp.k
+    start: str = "Biloxi, MS, USA"
+    end: str = "Memphis, MS, USA"
+    gmaps = googlemaps.Client(key=key)
+    directions = gmaps.directions(start, end)
+    map_url = f"https://maps.googleapis.com/maps/api/staticmap?center=Jackson,MS&zoom=13&size=600x300&maptype=roadmap&markers=color:blue4&key={key}"
+    response = requests.get(map_url)
     
-    def get_gmaps_route(start, end, mode='driving', avoid=None, units='metric',
-                        departure_time=None, traffic_model=None, c = None):
-        """
-        Get GMP Route
-        :param start:
-        :param end:
-        :param mode:
-        :param avoid:
-        :param units:
-        :param departure_time:
-        :param traffic_model:
-        :return:
-        
-        """
-        gmaps = googlemaps.Client(key=c)
-
-
-
+    #start_gmaps.Geocoding(address=start)
+     
