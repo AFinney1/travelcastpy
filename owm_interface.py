@@ -1,14 +1,21 @@
-from OWMk import owm
+from OWMk import k
+import dataclasses
+from dataclasses import dataclass
+import requests, json
 
 
 
-def get_weather(city):
-    """
-    This function gets the weather from the Open Weather Map API.
-    :param city: The city to get the weather from.
-    :return: The weather data.
-    """
-    return owm
-
-
+@dataclass
+class owm():
+    key = k.key
+    city = "Biloxi,ms,us"
+    owm_url =f"https://api.openweathermap.org/data/2.5/weather?q={city}&APPID={key}"
+    response = requests.get(owm_url)
+    data = json.loads(response.content)
+    main = data['main']
+    temp = main['temp']
+    coord= data['coord']
+    lat = coord['lat']
+    lon = coord['lon']
+    weather_report = data['weather']
 

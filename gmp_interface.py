@@ -14,12 +14,15 @@ class GMProute:
     GMP Route
     """
     key : str = gmp.k
-    start: str = "Biloxi, MS, USA"
-    end: str = "Memphis, MS, USA"
+    start: str = "Biloxi,MS,USA"
+    end: str = "Memphis,MS,USA"
     gmaps = googlemaps.Client(key=key)
     directions = gmaps.directions(start, end)
-    map_url = f"https://maps.googleapis.com/maps/api/staticmap?center=Jackson,MS&zoom=13&size=600x300&maptype=roadmap&markers=color:blue4&key={key}"
-    response = requests.get(map_url)
-    
+    def my_map(self):
+        key = self.key
+        start = self.start
+        map_url = f"https://maps.googleapis.com/maps/api/staticmap?center={start}&size=720x720&zoom=13&key={key}"
+        response = requests.get(map_url).content
+        return response
     #start_gmaps.Geocoding(address=start)
      
