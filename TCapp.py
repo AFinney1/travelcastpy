@@ -22,12 +22,12 @@ def main():
     route = GMProute(start, end)
     route.start = start
     route.end = end
-    static_map = route.my_map()
+    
+    static_map = route.snapped_map()
     #st.write(d)
     #print(directions)
     st.image(static_map)
-
-
+  
 
    
 if __name__ == '__main__':

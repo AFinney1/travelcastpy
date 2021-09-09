@@ -14,33 +14,30 @@ class GMProute:
     GMP Route
     """
     start: str 
-    end: str  
+    end: str 
     key : str = gmp.k
-    i_start = "Biloxi, MS"
-    i_end = "Memphis, TN"
     pathline : str = ""
     gmaps = googlemaps.Client(key=key)
-    directions = gmaps.directions(i_start, i_end)
 
-    def __post_init__(self):
-        if self.start is None:
-            self.start : str = self.i_start
-        if self.end is None:
-            self.end : str = self.i_end
 
-    def intermediate_coordinates(d) -> list:
+    def intermediate_coordinates(self):
+        gmaps = self.gmaps
+        start = self.start
+        end = self.end
+        directions = gmaps.directions(start, end)
         ic_list = []
+        d = directions
         for doc in d[0]["legs"][0]["steps"]:
             #print(doc["end_location"])
             ic_list.append(doc["end_location"])
         return ic_list
     
-    inter_coor = intermediate_coordinates(directions)
 
-    def my_path(inter_coor):
+    def my_path(self):
         pth = ""
         counter = 0
         center = ""
+        inter_coor = self.intermediate_coordinates()
         number_of_locations = len(inter_coor)
         center_index = number_of_locations/2
         for i in inter_coor:
@@ -53,28 +50,59 @@ class GMProute:
             if counter == center_index:
                 center = latlon             
         #print(pth)
-        print(center)
+        #print(center)
         return pth, center
 
-    path = my_path(inter_coor)
+
+
+    def clean_path(self):
+        path = self.my_path()[0]
+        pth =  googlemaps.roads.snap_to_roads(self.gmaps, path, interpolate=True)
+        counter = 0
+        center = ""
+        ic_list = []
+        for doc in pth:
+            counter += 1
+            #print(doc["end_location"])
+            ic_list.append(doc["location"])
+        print(ic_list)
+        inter_coor = ic_list
+        number_of_locations = len(inter_coor)
+        center_index = number_of_locations/2
+        counter = 0
+        for i in inter_coor:
+            counter += 1
+            latlon = str(i["latitude"]) + "," + str(i["longitude"])
+            if counter < len(inter_coor):
+                pth += latlon + "|"
+            else:
+                pth += latlon
+            if counter == center_index:
+                center = latlon             
+        #print(pth)
+        #print(center)
+        print(pth)
+        return pth, center
+
+
     def my_map(self):
         key = self.key
-        start = self.start
-        p = self.path[0]
-        path_center = self.path[1]
-        map_url = f"https://maps.googleapis.com/maps/api/staticmap?&center={path_center}&size=1080x1080&zoom=6&key={key}&sensor=false&mode=driving&path={p}"
+        p = self.my_path()[0]
+        path_center = self.my_path()[1]
+        map_url = f"https://maps.googleapis.com/maps/api/staticmap?&center={path_center}&size=1080x1080&key={key}&sensor=false&mode=driving&path={p}"
         response = requests.get(map_url).content
         return response
 
-    def inter_locations(self):
-        """
-        Return a list of locations between the start and end locations
-        """
-        start = self.start
-        end = self.end
-        distance_matrix = self.gmaps.distance_matrix(self.start, self.end)
-        return distance_matrix
-
+    
+    def snapped_map(self):
+        key = self.key
+        p = self.clean_path()[0]
+        path_center = self.clean_path()[1]
+        
+         
+        map_url = f"https://maps.googleapis.com/maps/api/staticmap?&center={path_center}&size=1080x1080&key={key}&sensor=false&mode=driving&path={p}"
+        response = requests.get(map_url).content
+        return response
 
     #start_gmaps.Geocoding(address=start)
      
