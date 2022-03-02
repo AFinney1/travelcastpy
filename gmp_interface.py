@@ -65,7 +65,7 @@ class GMProute:
             counter += 1
             #print(doc["end_location"])
             ic_list.append(doc["location"])
-        print(ic_list)
+        
         inter_coor = ic_list
         number_of_locations = len(inter_coor)
         center_index = number_of_locations/2

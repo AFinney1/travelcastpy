@@ -23,7 +23,7 @@ def main():
     route.start = start
     route.end = end
     
-    static_map = route.snapped_map()
+    static_map = route.my_map()
     #st.write(d)
     #print(directions)
     st.image(static_map)
