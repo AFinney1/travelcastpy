@@ -12,16 +12,15 @@ def main():
     start = st.text_input("Enter starting city: ", "Jackson, MS, USA")
     end = st.text_input("Enter destination city: ", "Memphis, TN, USA")
 
-
+    lat = "0"
+    lon = "0"
     #forecast initiation
-    forecast = owm()
-    start_coordinates = (forecast.lat, forecast.lon)
-    end_coordinates = (forecast.lat, forecast.lon)
 
     #route initiation
     route = GMProute(start, end)
     route.start = start
     route.end = end
+    route_points = route.my_path()[0]
     
     static_map = route.my_map()
     #st.write(d)

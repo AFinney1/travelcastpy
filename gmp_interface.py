@@ -38,6 +38,7 @@ class GMProute:
         counter = 0
         center = ""
         inter_coor = self.intermediate_coordinates()
+        #print(inter_coor)
         number_of_locations = len(inter_coor)
         center_index = number_of_locations/2
         for i in inter_coor:
@@ -89,7 +90,7 @@ class GMProute:
         key = self.key
         p = self.my_path()[0]
         path_center = self.my_path()[1]
-        map_url = f"https://maps.googleapis.com/maps/api/staticmap?&center={path_center}&size=1080x1080&key={key}&sensor=false&mode=driving&path={p}"
+        map_url = f"https://maps.googleapis.com/maps/api/staticmap?&center={path_center}&size=1080x1080&key={key}&sensor=false&markers&mode=driving&path={p}"
         response = requests.get(map_url).content
         return response
 
