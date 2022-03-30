@@ -26,18 +26,22 @@ class GMProute:
         end = self.end
         directions = gmaps.directions(start, end)
         ic_list = []
+        times = []
         d = directions
+        # print(d)
+        for t in d[0]["legs"][0]["duration"]["text"]:
+            times.append(t)
         for doc in d[0]["legs"][0]["steps"]:
             #print(doc["end_location"])
             ic_list.append(doc["end_location"])
-        return ic_list
+        return ic_list, times
     
 
     def my_path(self):
         pth = ""
         counter = 0
         center = ""
-        inter_coor = self.intermediate_coordinates()
+        inter_coor = self.intermediate_coordinates()[0]
         #print(inter_coor)
         number_of_locations = len(inter_coor)
         center_index = number_of_locations/2

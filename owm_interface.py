@@ -41,4 +41,4 @@ class WeatherForecast():
 forecast = WeatherForecast(city = "Jackson, MS, US").get_forecast()
 
 forecast['dt'] = pd.to_datetime(forecast['dt'], unit='s')
-print(forecast)
+#print(forecast)
