@@ -34,10 +34,11 @@ class WeatherForecast():
         hourly = data['hourly']
         #print(hourly)
         weather_report = main['weather']
-        print(hourly)
+        #print(hourly)
         #print(weather_report)
         return pd.DataFrame(hourly)
 
 forecast = WeatherForecast(city = "Jackson, MS, US").get_forecast()
 
-
+forecast['dt'] = pd.to_datetime(forecast['dt'], unit='s')
+print(forecast)
