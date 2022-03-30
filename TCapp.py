@@ -18,6 +18,8 @@ def main():
 
     #route initiation
     route = GMProute(start, end)
+    print(len(route.intermediate_coordinates()))
+    
     route.start = start
     route.end = end
     route_points = route.my_path()[0]
