@@ -29,8 +29,8 @@ class GMProute:
         times = []
         d = directions
         # print(d)
-        for t in d[0]["legs"][0]["duration"]["text"]:
-            times.append(t)
+        for t in d[0]["legs"][0]["steps"]:
+            times.append(t["duration"]["text"])
         for doc in d[0]["legs"][0]["steps"]:
             #print(doc["end_location"])
             ic_list.append(doc["end_location"])
