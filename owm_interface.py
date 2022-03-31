@@ -36,9 +36,12 @@ class WeatherForecast():
         weather_report = main['weather']
         #print(hourly)
         #print(weather_report)
-        return pd.DataFrame(hourly)
+        hourly_df = pd.DataFrame(hourly)
+        hourly_df['dt'] = pd.to_datetime(hourly_df['dt'], unit='s')
+        hourly_df.rename(columns={'dt':'time'}, inplace=True)
+        main_df = pd.DataFrame(main)
+        main_df['dt'] = pd.to_datetime(main_df['dt'], unit='s')
+        main_df.rename(columns={'dt':'time'}, inplace=True)
+        return hourly_df, main_df
 
-forecast = WeatherForecast(city = "Jackson, MS, US").get_forecast()
 
-forecast['dt'] = pd.to_datetime(forecast['dt'], unit='s')
-#print(forecast)
