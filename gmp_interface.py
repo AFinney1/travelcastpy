@@ -17,6 +17,7 @@ class GMProute:
     end: str 
     key : str = gmp.k
     pathline : str = ""
+    weather_list : list = field(default_factory=list)
     gmaps = googlemaps.Client(key=key)
 
 
@@ -98,13 +99,31 @@ class GMProute:
         response = requests.get(map_url).content
         return response
 
+    def marked_map(self):
+        key = self.key
+        p = self.my_path()[0]
+        path_center = self.my_path()[1]
+        markers_string = ""
+        inter_coor = self.intermediate_coordinates()[0]
+        for i in inter_coor:
+            print(i)
+        for idx, weather in enumerate(self.weather_list):
+            w = weather[0].upper()
+            if "clouds" in w:
+                w = "O"
+            if "rain" in w:
+                w = "R"
+            markers_string += f"&markers=color:blue%7Clabel:{w}%7C{inter_coor[idx]['lat']},{inter_coor[idx]['lng']}"
+        print(markers_string)
+        map_url = f"https://maps.googleapis.com/maps/api/staticmap?&center={path_center}&size=1080x1080&key={key}&sensor=false&markers={markers_string}&mode=driving&path={p}"
+        response = requests.get(map_url).content
+        return response
+
     
     def snapped_map(self):
         key = self.key
         p = self.clean_path()[0]
         path_center = self.clean_path()[1]
-        
-         
         map_url = f"https://maps.googleapis.com/maps/api/staticmap?&center={path_center}&size=1080x1080&key={key}&sensor=false&mode=driving&path={p}"
         response = requests.get(map_url).content
         return response
