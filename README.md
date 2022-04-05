@@ -5,5 +5,5 @@
 - This project is still in development.
 - Here's a screenshot of the work-in-progress:
    
-   ![screenshot](tc_streamlit.png)
+   ![screenshot](TCapp-demo2.gif)
    
