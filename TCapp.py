@@ -67,7 +67,7 @@ def main():
     #st.write(d)
     #print(directions)
     st.image(static_map)
-    st.write("Weather Report Legend: C - Clear, F - few clouds, B - Broken Clouds, O - overcast clouds, R - Rain, S - Snow, T - Thunderstorm, U - Unknown")
+    st.write("Weather Report Legend: C - Clear, O - clouds, R - Rain, S - Snow, T - Thunderstorm, U - Other")
     st.write("Due to constraints with Google Maps API, the markers do not support labels other than upper case letters. I will work around this in the future by substituting the labeled marker with an icon of the weather.")
   
 

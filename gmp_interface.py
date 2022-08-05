@@ -108,11 +108,19 @@ class GMProute:
         for i in inter_coor:
             print(i)
         for idx, weather in enumerate(self.weather_list):
-            w = weather[0].upper()
-            if "clouds" in w:
+            print(weather)
+            w = weather
+            print(w)
+            if "clouds" in weather:
                 w = "O"
-            if "rain" in w:
+            elif "rain" in weather:
                 w = "R"
+            elif "snow" in weather:
+                w = "S"
+            elif "thunderstorm" or "storm" in weather:
+                w = "T"
+            else:
+                w = "Other"
             markers_string += f"&markers=color:blue%7Clabel:{w}%7C{inter_coor[idx]['lat']},{inter_coor[idx]['lng']}"
         print(markers_string)
         map_url = f"https://maps.googleapis.com/maps/api/staticmap?&center={path_center}&size=1080x1080&key={key}&sensor=false&markers={markers_string}&mode=driving&path={p}"
